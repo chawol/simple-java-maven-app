@@ -10,7 +10,7 @@ stages {
             }
 
         }
-
+}
 
     agent {
         docker {
