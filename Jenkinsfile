@@ -1,10 +1,24 @@
 pipeline {
+stages {
+
+        stage("Fix the permission issue") {
+
+            agent any
+
+            steps {
+                sh "sudo chown root:jenkins /run/docker.sock"
+            }
+
+        }
+
+
     agent {
         docker {
             image 'maven:3-alpine'
             args '-u root:sudo -v /root/.m2:/root/.m2'
         }
     }
+
     stages {
         stage('Build') {
             steps {
