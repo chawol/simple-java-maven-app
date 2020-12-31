@@ -1,38 +1,13 @@
 pipeline {
-stages {
-
-        stage("Fix the permission issue") {
-
-            agent any
-
-            steps {
-                sh "sudo chown root:jenkins /run/docker.sock"
-            }
-
-        }
-}
-
-    agent {
-        docker {
-            image 'maven:3-alpine'
-            args '-u root:sudo -v /root/.m2:/root/.m2'
-        }
-    }
-
+    agent any
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
+                sh 'echo "Hello World"'
+                sh '''
+                    echo "Multiline shell steps works too"
+                    ls -lah
+                '''
             }
         }
     }
